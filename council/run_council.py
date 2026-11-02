@@ -14,7 +14,7 @@ KEYS = {}
 # Keys come from a KEY=VALUE file (COUNCIL_KEYS_FILE, default ~/.model-keys.env) and/or plain environment variables.
 _KEYS_FILE = os.environ.get("COUNCIL_KEYS_FILE", os.path.expanduser("~/.model-keys.env"))
 if os.path.exists(_KEYS_FILE):
-    for line in open(_KEYS_FILE, encoding="utf-8"):
+    for line in open(_KEYS_FILE, encoding="utf-8-sig"):
         line = line.strip()
         if line and not line.startswith("#") and "=" in line:
             k, v = line.split("=", 1); KEYS.setdefault(k.strip(), v.strip())
@@ -273,7 +273,7 @@ def call_codex(label):
     """T2 arbiter. Windows: bare "codex" is a shim (WinError 2), a ~6KB prompt passed as
     argv arrives EMPTY, and given a repo as cwd it reads files instead of the brief.
     So: full .cmd path + prompt on stdin + a neutral empty working directory."""
-    exe = os.environ.get("CODEX_BIN") or shutil.which("codex") or r"C:/Users/diony/AppData/Roaming/npm/codex.cmd"
+    exe = os.environ.get("CODEX_BIN") or shutil.which("codex") or "codex"
     sandbox = tempfile.mkdtemp(prefix="council_sandbox_")
     guard = ("Answer ONLY from the brief text below. Do not read, list or open any files. "
              "Do not use tools. Output ONLY the required lines." + chr(10) + chr(10))
@@ -302,6 +302,10 @@ OM = "https://openrouter.ai/api/v1/models"
 MI = "https://api.mistral.ai/v1/chat/completions"
 GEMU = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
 IL = KEYS.get("ILMU_BASE_URL", "https://api.ilmu.ai/v1").rstrip("/") + "/chat/completions"
+missing_keys = [name for name in ("GROQ_API_KEY", "OPENROUTER_API_KEY") if not KEYS.get(name)]
+if missing_keys:
+    parser.exit(2, "Missing required API keys: " + ", ".join(missing_keys)
+                + ". Set them in COUNCIL_KEYS_FILE or the environment.\n")
 GK, OK_ = KEYS["GROQ_API_KEY"], KEYS["OPENROUTER_API_KEY"]
 OK_ALT = KEYS.get("OPENROUTER_API_KEY_AITKL", "")
 MK, GMK, ILK = KEYS.get("MISTRAL_API_KEY",""), KEYS.get("GEMINI_API_KEY",""), KEYS.get("ILMU_API_KEY","")
@@ -438,3 +442,7 @@ print("DONE", answered, "of", len(out), "->", OUT_PATH)
 for label, text in out.items():
     if text.startswith(("__ERROR__","__NOVERDICT__","__SKIPPED__")):
         print("MISSING", label + ":", text[:300])
+
+# All-seat failures must be visible to batch retry callers.
+if not answered:
+    sys.exit(1)

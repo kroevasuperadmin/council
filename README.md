@@ -54,3 +54,17 @@ Anything written for Faris or for outside people must also pass NO_AI_SLOP.md.
 - prompts/                 the four special review modes (hook, objection, premortem, red team)
 - docs/SKILL_laptop_version.md   how the laptop team uses Council (contains laptop paths; ignore those)
 - batch_example.txt        a blank decision batch
+
+## Linux decision batches
+
+Place keys in `$HOME/.config/council/keys.env` (UTF-8; a BOM is accepted).
+Run `./run_batch.sh /absolute/path/to/decisions` to run two `.txt` decisions
+at a time using Tier 1 only. Each result is saved beside its prompt as `.json`;
+existing JSON files are skipped. Logs append to the matching `.log` file.
+Failed runs get up to three attempts with 30/60-second waits; configuration
+errors stop immediately. An all-seat failure exits nonzero and is retried.
+A partial panel with at least one answer is saved; inspect `MISSING` lines in
+the log before relying on it. Delete its JSON to rerun that decision.
+The wrapper fixes `COUNCIL_KEYS_FILE` to the path above; environment keys are
+also accepted by the Python runner. Do not run overlapping wrappers on the
+same input directory.
