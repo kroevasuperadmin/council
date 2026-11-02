@@ -30,7 +30,7 @@ Each seat falls back to sibling models on the same key if its model is out of qu
 Tier 2 (paid, only with --tier2):
 - IlmuClaw (ilmu-v3.1) through ILMU_BASE_URL
 - OpenRouter paid: minimax/minimax-m3
-- Codex CLI "arbiter": runs `codex exec --skip-git-repo-check` and reads the brief on stdin. It uses the ChatGPT login already on the box, no key. Set CODEX_BIN if codex is not on PATH.
+- OpenAI "arbiter" on the API key: OPENAI_API_KEY_CODEX (plus OPENAI_ORG_ID if the key needs it), model gpt-6-luna (change with COUNCIL_ARBITER_MODEL). It burns API credits, never a ChatGPT plan or login (Faris's rule). The Codex CLI is used only if you set COUNCIL_ALLOW_CODEX_CLI=1, and then it runs on whatever login the CLI has, so leave it off.
 No Grok and no Claude seat is called.
 
 ## Environment variable names (values are NOT in this repo; Faris supplies them)
@@ -40,8 +40,11 @@ No Grok and no Claude seat is called.
 - MISTRAL_API_KEY         Mistral seats (skipped without it)
 - GEMINI_API_KEY          Gemini seats (skipped without it)
 - ILMU_API_KEY and ILMU_BASE_URL   Tier 2 IlmuClaw only
+- OPENAI_API_KEY_CODEX, OPENAI_ORG_ID   Tier 2 arbiter (API key only)
+- COUNCIL_ARBITER_MODEL   optional, default gpt-6-luna
+- COUNCIL_ALLOW_CODEX_CLI   leave unset
 - COUNCIL_KEYS_FILE       optional path to a KEY=VALUE file holding the above
-- CODEX_BIN               optional path to the codex executable
+- CODEX_BIN               only used with COUNCIL_ALLOW_CODEX_CLI=1
 
 ## Reading the result
 Each answer starts with its verdict label. Count the labels, read the one-line reasons, and give the most weight to any seat that names a concrete risk. Rules for how the laptop team weighs them (the Jernih/Keruh filter) are in docs/SKILL_laptop_version.md. A tie or a split goes to Faris, never to a coin toss.

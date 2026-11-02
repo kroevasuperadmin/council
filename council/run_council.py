@@ -18,7 +18,7 @@ if os.path.exists(_KEYS_FILE):
         line = line.strip()
         if line and not line.startswith("#") and "=" in line:
             k, v = line.split("=", 1); KEYS.setdefault(k.strip(), v.strip())
-for _k in ("GROQ_API_KEY", "OPENROUTER_API_KEY", "OPENROUTER_API_KEY_AITKL", "MISTRAL_API_KEY", "GEMINI_API_KEY", "ILMU_API_KEY", "ILMU_BASE_URL"):
+for _k in ("GROQ_API_KEY", "OPENROUTER_API_KEY", "OPENROUTER_API_KEY_AITKL", "MISTRAL_API_KEY", "GEMINI_API_KEY", "ILMU_API_KEY", "ILMU_BASE_URL", "OPENAI_API_KEY_CODEX", "OPENAI_ORG_ID"):
     if os.environ.get(_k):
         KEYS.setdefault(_k, os.environ[_k])
 
@@ -296,6 +296,32 @@ def call_codex(label):
         try: os.unlink(ppath)
         except Exception: pass
 
+def call_openai_arbiter(label):
+    """T2 arbiter on the OpenAI API key. Faris's rule: it burns API credits, NEVER a ChatGPT plan or login."""
+    import urllib.request, urllib.error
+    key = KEYS.get("OPENAI_API_KEY_CODEX", "")
+    if not key:
+        return label, "__SKIPPED__ no OPENAI_API_KEY_CODEX (the arbiter runs on the API key only, never on a ChatGPT login)"
+    model = os.environ.get("COUNCIL_ARBITER_MODEL", "gpt-6-luna")
+    guard = "Answer ONLY from the brief text below. Do not use tools. Output ONLY the required lines.\n\n"
+    body = json.dumps({"model": model, "messages": [{"role": "user", "content": guard + PROMPT}], "max_completion_tokens": 1500}).encode("utf-8")
+    headers = {"Authorization": "Bearer " + key, "Content-Type": "application/json"}
+    if KEYS.get("OPENAI_ORG_ID"):
+        headers["OpenAI-Organization"] = KEYS["OPENAI_ORG_ID"]
+    for attempt in range(3):
+        try:
+            req = urllib.request.Request("https://api.openai.com/v1/chat/completions", data=body, headers=headers)
+            r = json.loads(urllib.request.urlopen(req, timeout=300).read().decode("utf-8"))
+            text = (r["choices"][0]["message"].get("content") or "").strip()
+            return label, text[:6000] if text else "__ERROR__ empty arbiter output"
+        except urllib.error.HTTPError as e:
+            msg = e.read().decode("utf-8", "replace")[:200]
+            if e.code in (429, 500, 502, 503) and attempt < 2:
+                time.sleep(10 * (attempt + 1)); continue
+            return label, f"__ERROR__ arbiter {model} http {e.code} {msg}"
+        except Exception as e:
+            return label, f"__ERROR__ arbiter {model}: {e}"
+
 G  = "https://api.groq.com/openai/v1/chat/completions"
 O  = "https://openrouter.ai/api/v1/chat/completions"
 OM = "https://openrouter.ai/api/v1/models"
@@ -422,7 +448,7 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=8) as ex:
     if tier2 and not args.vision_only:
         for i, (label, model) in enumerate(OR_PAID_JOBS):
             futs.append(ex.submit(call_or_paid, label, model, delay=(len(futs) + i) * STAGGER))
-        futs.append(ex.submit(call_codex, "Codex gpt-5.6 (T2 ARBITER)"))
+        futs.append(ex.submit(call_codex, "Codex CLI (T2 ARBITER, ChatGPT login)") if os.environ.get("COUNCIL_ALLOW_CODEX_CLI") == "1" else ex.submit(call_openai_arbiter, "OpenAI arbiter (T2, API key)"))
     for f in concurrent.futures.as_completed(futs):
         label, text = f.result()
         text = text or "__ERROR__ empty"
