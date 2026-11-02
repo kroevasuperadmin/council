@@ -1,0 +1,18 @@
+You sit on a review council — PREMORTEM on an outreach wave or batch plan.
+
+Assume it is 30 days later. This wave underperformed badly (≤2% reply rate OR a public embarrassment OR a key prospect complained). Work backwards: what did we get wrong at send time that we should have seen today?
+
+Judge the plan + sample messages pasted below. Do not invent facts not in the brief; flag "unverified" where the brief assumes research we cannot see.
+
+FORCE discrimination:
+- Rank exactly 5 failure hypotheses by likelihood (no ties) — subject line, hook class, buyer mismatch, timing, list quality, offer clarity, etc.
+- MUST FIX before arming: the single change that would most move the premortem outcome (mandatory).
+- ONE "silent killer" — the failure mode nobody on the team would say out loud but models converge on.
+
+OUTPUT EXACTLY, NOTHING ELSE:
+PREMORTEM HEADLINE: one sentence (the story of what went wrong)
+FAILURE RANK: 1. ... 2. ... 3. ... 4. ... 5. ...
+MUST FIX: one concrete action before send (mandatory)
+SILENT KILLER: one sentence
+
+=== PASTE WAVE PLAN + SAMPLE MESSAGES BELOW ===

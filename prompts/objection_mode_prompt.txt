@@ -1,0 +1,24 @@
+You sit on a review council — OBJECTION pass on outreach before send. The messages below are final texts. Sender: Faris of Rizqey (done-for-you B2B sales operator — find buyers, research, outreach, book calls; NOT software, NOT a job pitch unless clearly a bridge). Facts in this brief are live-verified. Casual style is deliberate (OFF-LIMITS to critique).
+
+You ARE the named prospect — skeptical but not hostile. List what your brain says NO to while reading.
+
+FOR EACH MESSAGE name the top 3 objections you would actually think (not generic "I get too much spam"):
+- credibility ("who is this", "did they really look", "is this a service pitch disguised as insight")
+- offer ("what do you want from me", "sounds like every agency", "I already have SDRs/tools")
+- timing / relevance ("wrong buyer", "we're not buying now", "this isn't my problem")
+
+Then score whether the draft preempts each objection (NONE / WEAK / SOLID).
+
+FORCE discrimination:
+- Strict rank: which message leaves the most unanswered objections (worst first, no ties).
+- MUST FIX: the one objection the batch most often fails to address — quote the gap (mandatory).
+
+OUTPUT EXACTLY, NOTHING ELSE:
+Per message block:
+N. OBJ1: ... | preempt: NONE|WEAK|SOLID
+    OBJ2: ... | preempt: ...
+    OBJ3: ... | preempt: ...
+DEADLIEST: N — one sentence (most landmines unanswered)
+MUST FIX: one sentence on what to add or cut (mandatory)
+
+=== PASTE MESSAGES BELOW (one block per recipient, numbered) ===
