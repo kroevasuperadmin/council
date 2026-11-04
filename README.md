@@ -25,7 +25,7 @@ Tier 1 (free, default):
 - Groq: openai/gpt-oss-120b, openai/gpt-oss-20b, qwen/qwen3.8-27b
 - Google AI Studio (Gemini API): gemini-3.5-flash (also reads images), gemini-3.1-flash-lite
 - Mistral: open-mistral-nemo, ministral-8b-latest, ministral-3b-latest
-- OpenRouter free pool: Gemma-4, Nemotron-3, Laguna. With --images also Dots3-Note and Inkling vision seats.
+- OpenRouter free pool: Gemma-4, Nemotron-3, North-Mini (Cohere). With --images also Dots3-Note and Inkling vision seats.
 Each seat falls back to sibling models on the same key if its model is out of quota or gone, and says so in a SEAT NOTE.
 Tier 2 (paid, only with --tier2):
 - IlmuClaw (ilmu-v3.1) through ILMU_BASE_URL

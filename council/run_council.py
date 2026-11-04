@@ -345,8 +345,8 @@ def load_openrouter_free_models():
 FALLBACK_OR_FREE_MODELS = {
     "nex-agi/nex-n2.5-pro:free": set(), "nex-agi/nex-n2.5-mini:free": set(),
     "google/gemma-4-31b-it:free": {"image"}, "google/gemma-4-26b-a4b-it:free": {"image"},
-    "nvidia/nemotron-3-ultra-550b-a55b:free": set(), "nvidia/nemotron-3-super-120b-a12b:free": set(),
-    "poolside/laguna-s-2.1:free": set(), "poolside/laguna-xs-2.1:free": set(),
+    "nvidia/nemotron-3-ultra-550b-a55b:free": set(), "nvidia/nemotron-3.5-super-vl:free": {"image"},
+    "cohere/north-mini-code:free": set(),
     "dots-studio/dots-3-note-preview:free": {"image"},
     "thinkingmachines/inkling-small:free": {"image"}, "thinkingmachines/inkling:free": {"image"},
 }
@@ -416,8 +416,8 @@ JOBS = [
 VISION_MODELS = {"gemini-3.5-flash"}
 OR_FREE_JOBS = [
     ("Gemma-4 (Google-open/OR)", ["google/gemma-4-31b-it:free", "google/gemma-4-26b-a4b-it:free"]),
-    ("Nemotron-3 (NVIDIA/OR)", ["nvidia/nemotron-3-ultra-550b-a55b:free", "nvidia/nemotron-3-super-120b-a12b:free"]),
-    ("Laguna (Poolside/OR)", ["poolside/laguna-s-2.1:free", "poolside/laguna-xs-2.1:free"]),
+    ("Nemotron-3 (NVIDIA/OR)", ["nvidia/nemotron-3-ultra-550b-a55b:free", "nvidia/nemotron-3.5-super-vl:free"]),
+    ("North-Mini (Cohere/OR)", ["cohere/north-mini-code:free"]),  # 4 Nov 2026: Laguna left OpenRouter, Nemotron-3 Super lost its free tier
 ]
 OR_FREE_VISION_JOBS = [
     ("Dots3-Note Vision (Dots/OR)", ["dots-studio/dots-3-note-preview:free"], 900),
