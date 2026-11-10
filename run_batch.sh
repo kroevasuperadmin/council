@@ -5,7 +5,7 @@ if [[ $# != 1 || ! -d "$1" ]]; then
     echo "Usage: $0 DIRECTORY_OF_TXT_FILES" >&2
     exit 2
 fi
-export COUNCIL_KEYS_FILE="$HOME/.config/council/keys.env"
+export COUNCIL_KEYS_FILE="${COUNCIL_KEYS_FILE:-$HOME/.config/council/keys.env}"
 exec python3 - "$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)" "$1" <<'PY'
 import concurrent.futures
 import os

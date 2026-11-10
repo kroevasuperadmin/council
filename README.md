@@ -3,6 +3,22 @@
 A panel of AI models that each judge the same text and return a labelled verdict. Built by Faris's laptop team; this copy is for the Grok Bot box.
 Python 3, standard library only (no pip install). Written on Windows; the three Windows-only paths were made portable on 2 Nov 2026 and this has NOT been run on Linux yet. Expect to fix small things on the first run.
 
+## Bots: drop a brief, read summary.md; Kiro drives runs end to end
+
+If you are a bot and want the panel's judgment, you do not touch the runner, keys, or seats.
+Do exactly two things:
+
+1. **Drop a brief.** Write one `.txt` file stating the decision, the facts, the options, and the
+   exact answer format (uppercase labels like `VERDICT 1:`, `REASON 1:`, `WEAKEST POINT 1:`, `FIX 1:`;
+   see `batch_example.txt`). One decision per file.
+2. **Read `summary.md`.** Run `./ask.sh <brief.txt>` (Kiro drives this end to end). It runs the free
+   Tier 1 seats with per-seat timeouts and writes a one-page `summary.md` next to your brief with:
+   the vote tally, the reason for each risk raised, SPLIT yes/no, and seats answered out of seats
+   called. The raw per-seat JSON and run log are kept in `<brief>.seats/` next to the brief.
+
+No keys, no flags, no spend by default. Add `--tier2` only if you explicitly want the paid seats.
+A tie or a SPLIT goes to Faris, never to a coin toss.
+
 ## Run it headless
 
     export COUNCIL_KEYS_FILE=/path/to/keys.env        # KEY=VALUE lines, or just export the variables below

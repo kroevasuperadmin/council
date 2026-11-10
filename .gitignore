@@ -2,3 +2,11 @@ __pycache__/
 batch/*.json
 batch/*.log
 batch/.*.json
+
+.env*
+*.pem
+*.key
+*.bak-*
+__pycache__/
+*.seats/
+run.log

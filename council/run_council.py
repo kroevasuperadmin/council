@@ -325,8 +325,9 @@ FALLBACK_OR_FREE_MODELS = {
     "google/gemma-4-31b-it:free": {"image"}, "google/gemma-4-26b-a4b-it:free": {"image"},
     "nvidia/nemotron-3-ultra-550b-a55b:free": set(), "nvidia/nemotron-3-super-120b-a12b:free": set(),
     "poolside/laguna-s-2.1:free": set(), "poolside/laguna-xs-2.1:free": set(),
+    "xingchen-agi/xing4.0-29b-a4b:free": set(), "nvidia/nemotron-3.5-lightning:free": set(),
     "dots-studio/dots-3-note-preview:free": {"image"},
-    "thinkingmachines/inkling-small:free": {"image"}, "thinkingmachines/inkling:free": {"image"},
+    "thinkingmachines/inkling-2-small:free": {"image"}, "thinkingmachines/inkling-small:free": {"image"}, "thinkingmachines/inkling:free": {"image"},
 }
 OR_FREE_MODELS = FALLBACK_OR_FREE_MODELS.copy()
 OR_FREE_MODELS.update(load_openrouter_free_models())
@@ -395,11 +396,11 @@ VISION_MODELS = {"gemini-3.5-flash"}
 OR_FREE_JOBS = [
     ("Gemma-4 (Google-open/OR)", ["google/gemma-4-31b-it:free", "google/gemma-4-26b-a4b-it:free"]),
     ("Nemotron-3 (NVIDIA/OR)", ["nvidia/nemotron-3-ultra-550b-a55b:free", "nvidia/nemotron-3-super-120b-a12b:free"]),
-    ("Laguna (Poolside/OR)", ["poolside/laguna-s-2.1:free", "poolside/laguna-xs-2.1:free"]),
+    ("Xing-4.0 (XingChen/OR)", ["xingchen-agi/xing4.0-29b-a4b:free", "nvidia/nemotron-3.5-lightning:free"]),  # replaces Laguna: retired on OpenRouter (404), checked 10 Nov 2026
 ]
 OR_FREE_VISION_JOBS = [
     ("Dots3-Note Vision (Dots/OR)", ["dots-studio/dots-3-note-preview:free"], 900),
-    ("Inkling Vision (Thinking Machines/OR)", ["thinkingmachines/inkling-small:free", "thinkingmachines/inkling:free"], 900),
+    ("Inkling Vision (Thinking Machines/OR)", ["thinkingmachines/inkling-2-small:free", "thinkingmachines/inkling-small:free", "thinkingmachines/inkling:free"], 900),
 ]
 OR_PAID_JOBS = [("MiniMax-M3 (MiniMax/OR)", "minimax/minimax-m3")]
 # TIER 2 — paid. Never default; run only when Faris asks for both tiers.
